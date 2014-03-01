@@ -1,5 +1,6 @@
 versions = node['nodejs-devenv']['versions']
 
+include_recipe 'git'
 include_recipe 'nodejs'
 
 bash 'Install n for managing NodeJS versions' do
