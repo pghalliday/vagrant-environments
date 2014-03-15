@@ -1,7 +1,24 @@
 site :opscode
 
-Dir[File.expand_path('../cookbooks/*', __FILE__)].each do |path|
-  cookbook(File.basename(path), path: path)
+def pghalliday_cookbook(name, version = '>= 0.0.0', options = {})  
+  cookbook(name, version, {
+    git: "https://github.com/pghalliday-cookbooks/#{name}.git"
+   }.merge(options))
 end
 
-cookbook 'apt'
+def local_pghalliday_cookbook(name, version = '>= 0.0.0', options = {})  
+  cookbook(name, version, {
+    path: "../../pghalliday-cookbooks/#{name}"
+   }.merge(options))
+end
+
+%w{
+  nodejs-devenv
+}.each do |name|
+  pghalliday_cookbook name
+end
+
+%w{
+}.each do |name|
+  local_pghalliday_cookbook name
+end
